@@ -1,2 +1,2 @@
-USD, DOLAR_USA, $
-EUR, EURO, E
+usd, DOLAR_USA, $
+eur, EURO, E
