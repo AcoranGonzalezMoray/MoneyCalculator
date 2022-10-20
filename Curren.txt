@@ -1,2 +1,2 @@
 usd, DOLAR_USA, $
-eur, EURO, E
+eur, Euro, €
