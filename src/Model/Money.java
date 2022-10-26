@@ -1,22 +1,24 @@
 package Model;
-//
+
 public class Money {
     
-    private final float amount;
-    private final String code;
+    private final double amount;
+    private final Currency currency;
 
-    public Money(float amount, String code) {
+    public Money(double amount, Currency currency) {
         this.amount = amount;
-        this.code = code;
+        this.currency = currency;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public String getCode() {
-        return code;
+    public Currency getCurrency() {
+        return currency;
     }
+
+
     
     
 

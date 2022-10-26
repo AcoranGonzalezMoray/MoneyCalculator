@@ -1,15 +1,10 @@
 package View;
 
 import Model.Currency;
-import Model.ExchangeRate;
-import Persistence.rest.ExchangeRateLoaderFromWebService;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,50 +12,33 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 public class GUI extends JFrame {
     
-    private JLabel Amount = new JLabel();
-    private JTextField amount = new JTextField("");
-    
-    private JLabel From = new JLabel();
-    private JComboBox from = new JComboBox();
-    
-    private JLabel To = new JLabel();
-    private JComboBox to = new JComboBox();
-    
-    private JPanel mainPanel = new JPanel();
-    private JPanel topPanel = new JPanel();
-    private JPanel bottomPanel = new JPanel();
-    private JPanel midPanel = new JPanel();
-    
-    private JLabel symbol = new JLabel();
+    private final JLabel Amount = new JLabel();
+    private final JLabel From = new JLabel();
+    private final JLabel To = new JLabel();
+    private final JPanel mainPanel = new JPanel();
+    private final JPanel topPanel = new JPanel();
+    private final JPanel bottomPanel = new JPanel();
+    private final JPanel midPanel = new JPanel();
+    private  final JLabel symbol = new JLabel();
     private List<Currency> list;
-    private ExchangeRateLoaderFromWebService exhM;
-    private JSeparator separator = new JSeparator();
+    private JComponent[] allComponents;
+    private final Map<String,JComponent> components = new LinkedHashMap<>();
     
-    private JLabel result = new JLabel();
-    private JLabel rate = new JLabel();
-    private JButton convert = new JButton("Convert");
-    private JComponent[] allComponents = {Amount,amount,symbol,From,from,To,to};
-    
-    public GUI(List<Currency> list, ExchangeRateLoaderFromWebService exchangeRateLoaderFromWebService) {
+    public GUI() {
         super("Money Calculator");
-        this.list=list;
-        this.exhM=exchangeRateLoaderFromWebService;
-        for(Currency item : list){
-            to.addItem(item.getCode());
-            from.addItem(item.getCode());
-        }
+        setDetailsComponents();
+    }
+    
+    public void ini(){
         setComponents();
-        setListener();
         setStructure();
     }
 
-    public void setStructure() {
+    private void setStructure() {
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       getContentPane().add(mainPanel);
       pack();
@@ -69,59 +47,57 @@ public class GUI extends JFrame {
       setVisible(true);
     }
     
-    public void setComponents(){
+    private void setComponents(){
         Amount.setText("Amount: ");
         From.setText("From: ");
         To.setText("To: ");
-        amount.setPreferredSize(new Dimension(50,20));
-        symbol.setText(list.get(from.getSelectedIndex()).getSymbol()+"    ");
-        result.setVisible(false);
-        rate.setVisible(false);
-        separator.setOrientation(SwingConstants.VERTICAL);
+        components.get("Amount").setPreferredSize(new Dimension(50,20));
+        symbol.setText(list.get(((JComboBox)components.get("From")).getSelectedIndex()).getSymbol()+"    ");
+        components.get("Result").setVisible(false);
+        components.get("Rate").setVisible(false);
         for (JComponent comp : allComponents) topPanel.add(comp);
-        bottomPanel.add(convert);
+        bottomPanel.add(((JButton)components.get("Convert")));
         
-        midPanel.add(result);
-        midPanel.add(separator);
-        midPanel.add(rate);
+        midPanel.add(components.get("Result"));
+        midPanel.add(components.get("Rate"));
         
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.add(topPanel);
         mainPanel.add(midPanel);
         mainPanel.add(bottomPanel);
     }
+    
+    public void setCurrency (List<Currency> loadCurrencies) {
+        this.list = loadCurrencies;
+        for(Currency item : list){
+            ((JComboBox)components.get("To")).addItem(item.getCode());
+            ((JComboBox)components.get("From")).addItem(item.getCode());
+        }
+    }
    
-    public void setListener(){
-        from.addActionListener (new ActionListener () {
-            public void actionPerformed(ActionEvent e) {
-                symbol.setText(list.get(from.getSelectedIndex()).getSymbol());
-            }
-        });
-        convert.addActionListener (new ActionListener () {
-            public void actionPerformed(ActionEvent e) {
-                
-                Currency from_ = list.get(from.getSelectedIndex());
-                Currency to_ = list.get(to.getSelectedIndex());
-                Double tempValue = Double.parseDouble(amount.getText());
-                DecimalFormat df = new DecimalFormat("###.##");
-                
-                ExchangeRate exchangeRate =  exhM.exh(from_ , to_);
-                ExchangeRate exchangeRateReverse =  exhM.exh(to_ , from_);
-                
-                result.setText(df.format(exchangeRate.getRate()* tempValue)
-                        + to_.getSymbol() );
-                
-                rate.setText("<html><body> "
-                        + "1 "+from_.getName()+" = "+exchangeRate.getRate()+" "+to_.getName()
-                        + "<br> "
-                        + "1 " + to_.getName()+" = "+ exchangeRateReverse.getRate()+" "+from_.getName() 
-                        +"</body></html>");
-                
-                result.setFont(new Font("Serif", Font.PLAIN, 28));
-                
-                result.setVisible(true);
-                rate.setVisible(true);
-            }
-        });
+    public Map<String, JComponent>  getDetailsComponents(){
+        return components;
+    }
+    
+    private void setDetailsComponents() {
+
+        JTextField amount = new JTextField("");
+        JComboBox from = new JComboBox();
+        JComboBox to = new JComboBox();
+        JLabel symbolVariable = new JLabel();
+        JLabel result = new JLabel();
+        JLabel rate = new JLabel();
+        JButton convert = new JButton("Convert");
+        
+        JComponent[] Components = {Amount,amount,symbolVariable,From,from,To,to};
+        this.allComponents = Components;
+        
+        components.put("From", from);
+        components.put("To", to);
+        components.put("Symbol", symbolVariable);
+        components.put("Convert", convert);
+        components.put("Result", result);
+        components.put("Rate", rate);
+        components.put("Amount", amount);
     }
 }
