@@ -20,7 +20,8 @@ public class ExchangeRateLoaderFromWebService implements ExchangeRateLoader{
     private double read(String codeFrom, String codeTo) {
         try{
             
-            String line = read2(new URL("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/"+codeFrom+"/"+codeTo+".json"));
+            String line = read2(new URL("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/"+codeFrom.toLowerCase()
+                    +"/"+codeTo.toLowerCase()+".json"));
             return Double.parseDouble(getStringRateFromJSONLine(line));
             //more code goes here
         }catch(MalformedURLException ex){

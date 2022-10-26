@@ -1,2 +1,28 @@
-usd, DOLAR_USA, $
-eur, Euro, €
+USD, Dólar estadounidense, $
+EUR, Euro, €
+GBP, Libra esterlina, £
+AUD, Dólar australiano, A$
+CAD, Dólar canadiense, C$
+CHF, Franco suizo, CHF
+CNY, Renminbi/yuan chino, 元
+HKD, Dólar de Hong Kong, HK$
+NZD, Dólar de Nueva Zelanda, NZ$
+SEK, Corona sueca, kr
+KRW, Won surcoreano, ₩
+SGD, Dólar de Singapur, S$
+NOK, Corona noruega	, kr
+MXN, Peso mexicano, $
+INR, Rupia india, ₹
+RUB, Rublo ruso, ₽
+ZAR, Rand sudafricano, R
+TRY, Lira turca, ₺
+BRL, Real brasileño, R$
+TWD, Nuevo dólar taiwanés, NT$
+DKK, Corona danesa, kr
+PLN, Złoty polaco, zł
+THB, Baht tailandés, ฿
+IDR, Rupia indonesia, Rp
+HUF, Florín húngaro, Ft
+CZK, Corona checa, Kč
+ILS, Nuevo shekel israelí, ₪
+CLP, Peso chileno, CLP$
