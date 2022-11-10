@@ -1,1 +1,2 @@
-"# MoneyCalculator" 
+# MoneyCalculator
+Requiere Java 17
