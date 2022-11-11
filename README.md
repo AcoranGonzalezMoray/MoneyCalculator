@@ -1,5 +1,5 @@
 # MoneyCalculator
-<p align="center"><img src="https://drive.google.com/file/d/1lBbAGTQ0b4xfPnjhMVwsnTcbqzwAPWAs/view?usp=share_link"></p>
+<p align="center"><img src="https://github.com/AcoranGonzalezMoray/MoneyCalculator/blob/main/imageReadme.png"></p>
 
 Requiere:
 ```
